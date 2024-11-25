@@ -1,24 +1,35 @@
 # CubeCobra
 
-An open source web application for building, managing, and playtesting Magic: the Gathering cubes.
+CubeCobra is an open-source web application for building, managing, and playtesting Magic: the Gathering cubes.
 
-### Contributing
+---
 
-If you are interested in contributing towards Cube Cobra, please read the [Contribution guidelines for this project](CONTRIBUTING.md).
+## Contribution guidelines
 
-# Setup
+Please read the [Contribution guidelines for this project](CONTRIBUTING.md) if you are interested in contributing to CubeCobra.
 
-### Install Prerequisites
+---
 
-You will need to install NodeJS, Redis, and an IDE of your preference (I recommend VSCode). You can find the necessary resources here:
+## Setup
 
-### NodeJS
+### 1. Install Prerequisites
+
+You will need to install the following prerequisites to run CubeCobra:
+
+- NodeJS
+- Redis
+- LocalStack
+- Code Editor (IDE) of your choice (though I recommend VSCode).
+
+You can find links to the prerequisites here, as well as some notes on each:
+
+#### NodeJS
 
 Node 20
 
 NodeJS: https://nodejs.org/en/download/
 
-### Redis
+#### Redis
 
 Redis Server:
 
@@ -26,32 +37,36 @@ Redis Server:
 - Mac: `brew install redis`
 - Linux: `apt-get install redis`
 
-After installing redis, start the server. On mac, a shortcut to do this is `brew services start redis`. You can seet the status with `brew services list`.
+After installing Redis, start the server.
 
-### Localstack
+On mac, a shortcut to do this is `brew services start redis`. You can seet the status with `brew services list`.
 
-[Localstack][localstack] provides a local emulation of AWS Services required to run CubeCobra including S3, DynamoDB and Cloudwatch.
+#### LocalStack
 
-You may follow the installation guidelines from the localstack site. The recommended setup involves running localstack in a docker container, which requires [Docker Desktop][docker] as well.
+[LocalStack][LocalStack] provides a local emulation of AWS Services required to run CubeCobra including S3, DynamoDB and Cloudwatch.
 
-- Windows: Download and install the binary from localstack
+You may follow the installation guidelines from the LocalStack site. The recommended setup involves running LocalStack in a docker container, which requires [Docker Desktop][docker] as well.
+
+- Windows: Download and install the binary from LocalStack
 - Mac: `brew install localstack/tap/localstack-cli`
-- Linux: Use the `curl` command from localstack
+- Linux: Use the `curl` command from LocalStack
 
-[localstack]: https://docs.localstack.cloud/getting-started/installation/
+[LocalStack]: https://docs.localstack.cloud/getting-started/installation/
 [docker]: https://docs.docker.com/desktop/install/mac-install/
 
-Once localstack is installed, you can start the server in the background with the CLI: `localstack start --detached`. You can see the status with `localstack status`.
+Once LocalStack is installed, you can start the server in the background with the CLI: `localstack start --detached`.
 
-### Code Editor (IDE)
+You can verify the status of LocalStack by running: `localstack status`.
 
-VSCode (strongly recommended, but not required): https://code.visualstudio.com/
-ESLint Extension for VSCode: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-Prettier Extension for VSCode: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+#### Code Editor (IDE)
+
+- VSCode (strongly recommended, but not required): https://code.visualstudio.com/
+- ESLint Extension for VSCode: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+- Prettier Extension for VSCode: https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 
 VSCode (with the ESLint and Prettier extension) is the recommended environment. When using this setup, make sure that your selected workspace is the root folder that you have cloned, this will ensure that the ESLint plugin can work with our linting rules. Prettier will automatically apply standard formatting to your code. Using these plugins will make adhering to the linting and code formatting rules significantly easier.
 
-### Initial Setup
+### 2. Perform Initial Setup
 
 For the first setup, you will need to run:
 
@@ -61,77 +76,80 @@ yarn setup:local
 ```
 
 This will:
-- install dependencies
-- build the application code to run setup scripts
-- run setup scripts to:
-  - create a .env file with values for running the application locally already set
-  - setup localstack w/ s3 bucket
-  - setup local files for application perisistence
-  - setup localstack dynamodb tables (ex. Users, Cubes, Cards, etc.)
-  - download bulk card data from scryfall, persist to files and load it to localstack s3
 
-If you are on Windows, you will need to set bash as your script shell:
+1. Install dependencies
+1. Build the application code to run setup scripts
+1. Run setup scripts to:
+  - Create a .env file with values for running the application locally already set
+  - Setup LocalStack w/ s3 bucket
+  - Setup local files for application perisistence
+  - Setup LocalStack dynamodb tables (ex. Users, Cubes, Cards, etc.)
+  - Download bulk card data from scryfall, persist to files and load it to LocalStack s3
 
-You will need to make sure you have `bash` installed somewhere and run the following command [with your `bash` path in place of the path below].
+If you are on Windows, you will need to set Bash as your script shell:
+
+You will need to make sure you have `bash` installed somewhere and run the following command (with your `bash` path in place of the path below).
 
 ```sh
 yarn config set script-shell "C:\\Program Files\\git\\bin\\bash.exe"
 ```
 
-### Running CubeCobra
+### 3. Run CubeCobra
 
-Then you can start the program like so:
+With your environment prepared, run this command to start CodeCobra:
 
 ```sh
 yarn start:dev
 ```
 
 This script will:
-- ensure localstack is running
-- ensure nearly parsers for card filters have compiled
-- compile & watch scss (bootstrap) styles
-- compile & watch server javascript w/ nodemon
-- run & watch webpack dev server
 
-You can now open up a browser and connect to the app through: http://localhost:8080.
+1. Ensure LocalStack is running
+1. Ensure nearley parsers for card filters have compiled
+1. Compile and watch scss (bootstrap) styles
+1. Compile and watch server javascript with nodemon
+1. Run and watch webpack dev server
 
-(Despite the fact that node says it is running on port 5000 in the logs, you should use port 8080 to connect.)
+Once the script completes, open a web browser and connect to the app on this URL: `http://localhost:8080`
 
-Nodemon will restart the application anytime there is a change to a source file.
+Please keep these two important points in mind while you use the application locally:
 
-After accessing the application locally you will need to create a new user account using the "Resister" link on the nav bar.
+1. While node reports the application as running on port 5000 in its logs, you should indeed use port `8080` to connect.
+1. Nodemon will restart the application anytime there is a change to a source file.
 
-### Environment Variables & Connecting to AWS
+After accessing the application locally you will need to create a new user account using the **Register** link on the navigation menu.
 
-Environment variables are populated from the `.env` file. There is no `.env` file checked in, so the setup script copies `.env_EXAMPLE` to `.env` and with some default values to support CubeCobra backed by LocalStack.
+### 4. Environment Variables and Connecting to AWS
 
-You can run a local instance of Cube Cobra against real AWS resources rather than LocalStack, if desired. After setting up S3, DynamoDB, and Cloudwatch using your AWS account, you can insert your credentials into the `.env` file.
+Environment variables are populated from the `.env` file. There is no `.env` file checked in to this repository, so the setup script copies `.env_EXAMPLE` to `.env` and with some default values to support CubeCobra backed by LocalStack.
 
-Here is a table on how to fill out the env vars:
+You can run a local instance of CubeCobra against real AWS resources rather than LocalStack, if desired. After setting up S3, DynamoDB, and Cloudwatch using your AWS account, you can insert your credentials into the `.env` file.
+
+This table outlines how to fill out those environment variables:
 
 | Variable Name          | Description                                                                                  | Required? |
-| ---------------------- | -------------------------------------------------------------------------------------------- | --------- | --- |
+| ---------------------- | -------------------------------------------------------------------------------------------- | --------- |
 | AWS_ACCESS_KEY_ID      | The AWS access key for your account.                                                         | Yes       |
 | AWS_ENDPOINT           | The base endpoint to use for AWS. Used to point to localstack rather than hosted AWS.        |           |
 | AWS_LOG_GROUP          | The name of the AWS CloudWatch log group to use.                                             | Yes       |
 | AWS_LOG_STREAM         | The name of the AWS CloudWatch log stream to use.                                            |           |
 | AWS_REGION             | The AWS region to use  (default: us-east-2).                                                 | Yes       |
 | AWS_SECRET_ACCESS_KEY  | The AWS secret access key for your account.                                                  | Yes       |
-| CUBECOBRA_VERSION      | The version of Cube Cobra.                                                                   |           |
+| CUBECOBRA_VERSION      | The version of CubeCobra.                                                                    |           |
 | DATA_BUCKET            | The name of the AWS S3 bucket to use. You will need to create this bucket in your account.   | Yes       |
 | DOMAIN                 | The domain name of the server. Used for external redirects such as emails.                   | Yes       |
 | DOWNTIME_ACTIVE        | Whether or not the site is in downtime mode.                                                 |           |
 | DYNAMO_PREFIX          | The prefix to use for DynamoDB tables. You can leave this as the default value               | Yes       |
 | EMAIL_CONFIG_PASSWORD  | The password for the email account to use for sending emails.                                |           |
 | EMAIL_CONFIG_USERNAME  | The username for the email account to use for sending emails.                                |           |
-| ENV                    | The environment to run Cube Cobra in.                                                        | Yes       | \   |
+| ENV                    | The environment to run CubeCobra in.                                                         | Yes       |
 | NITROPAY_ENABLED       | Whether or not to enable NitroPay, our ad provider.                                          |           |
-| NODE_ENV               | The environment to run Cube Cobra in.                                                        | Yes       |
+| NODE_ENV               | The environment to run CubeCobra in.                                                         | Yes       |
 | PATREON_CLIENT_ID      | The client ID for the Patreon OAuth app.                                                     |           |
 | PATREON_CLIENT_SECRET  | The client secret for the Patreon OAuth app.                                                 |           |
 | PATREON_HOOK_SECRET    | The secret for the Patreon webhook.                                                          |           |
 | PATREON_REDIRECT       | The redirect URL for the Patreon OAuth app.                                                  |           |
-| PORT                   | The port to run Cube Cobra on.                                                               | Yes       |
+| PORT                   | The port to run CubeCobra on.                                                                | Yes       |
 | REDIS_HOST             | The URL of the Redis server.                                                                 | Yes       |
 | REDIS_SETUP            | Whether or not to setup the Redis server - this is needed for Redis but not for elasticache. |           |
 | SECRET                 | A secret phrase for encryption. You can leave the default value.                             | Yes       |
@@ -143,65 +161,69 @@ Here is a table on how to fill out the env vars:
 | AUTOSCALING_GROUP      | The name of the autoscaling group this instance is run in, used for the distributed cache.   |           |
 | CACHE_SECRET           | The secret for the distributed cache.                                                        |           |
 
-### Updating Card Definitions and Analytics
+---
 
-In the initial setup scripts, `yarn update-cards` is what creates the card definitions. Running this script will pull the latest data from scryfall.
+## Updating Card Definitions and Analytics
 
-If you want card analytics, can run the following script:
+In the initial setup scripts, `yarn update-cards` creates the card definitions. Running this script will pull the latest data from scryfall.
+
+If you would like card analytics, run the following script:
 
 ```sh
 yarn update-all
 ```
 
-This will, in sequence:
-- update draft history
-- update cube history
-- update metadata dictionary
-- update cards
+This script will:
 
-# Concepts
+1. Update draft history
+1. Update cube history
+1. Update metadata dictionary
+1. Update cards
 
-## Backend
+---
 
-### API & Template Rendering
+## Concepts
+
+### Backend
+
+#### API and Template Rendering
 
 [Express 4][express] provides a minimalist web framework to support both template rendering with [PugJS 3][pug] and definition of JSON-based API endpoints. HTML templates are mainly used to render a minimal page for React to bootstrap itself into with initial props injected from the server.
 
-[express]: https://expressjs.com/en/4x/api.html
+- [express]: https://expressjs.com/en/4x/api.html
+- [pug]: https://pugjs.org/api/getting-started.html
 
-[pug]: https://pugjs.org/api/getting-started.html
-
-### Cards
+#### Cards
 
 We keep all card definitions in large pre-processed files, so that nodes in production just need to download and load the files, and can fetch the latest files from S3 when they're ready. We do this because it's much faster to read from memory than to have to make requests to some other service anytime we need card data.
 
-An external process is responsible for updating the card definitions, and uploading to S3. This same process is also responsible for updating the card analytics, and data exports.
+An external process is responsible for updating the card definitions, and uploading to S3. This same process is also responsible for updating the card analytics and data exports.
 
-### Multiplayer Drafting
+#### Multiplayer Drafting
 
-We use redis for concurrency control for multiplayer drafting. All redis operations are handled in `multiplayerDrafting.js`
+We use Redis for concurrency control for multiplayer drafting. All Redis operations are handled in `multiplayerDrafting.js`
 
-### Scheduled jobs
+#### Scheduled jobs
 
 Each instance of the express server runs a job using node-schedule on a nightly basis to update the in-memory carddb from s3.
 
-Bash scripts (`jobs/definition`) are executed periodically on AWS to run hourly, daily & weekly jobs.
+Bash scripts (`jobs/definition`) are executed periodically on AWS to run hourly, daily and weekly jobs.
 
-### Card Filters
+#### Card Filters
 
-Card filters are defined that can be used by the frontend and backend. [Nearley][nearly] is a nodejs parser toolkit that is used to generate code that define filters that can be applied to the card database.
+Card filters are defined that can be used by the frontend and backend. [Nearley][nearley] is a nodejs parser toolkit that is used to generate code that define filters that can be applied to the card database.
 
-[nearly]: https://nearley.js.org/
+- [nearley]: https://nearley.js.org/
 
-## Frontend
+### Frontend
 
-### Typescript
+#### Typescript
 
 [TypeScript 5.5][typescript] is gradually being rolled out to replace usage of vanilla JS components with PropTypes.
 
-[typescript]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html
+- [typescript]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html
 
-### Components & Styling
+#### Components and Styling
 
 Components are provided by [Reactstrap 9][reactstrap] which is powered by [Bootstrap v5.1][boostrap], which uses SCSS.
 
