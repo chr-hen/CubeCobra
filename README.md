@@ -213,7 +213,7 @@ Bash scripts (`jobs/definition`) are executed periodically on AWS to run hourly,
 
 Card filters are defined that can be used by the frontend and backend. [Nearley][nearley] is a nodejs parser toolkit that is used to generate code that define filters that can be applied to the card database.
 
-- [nearley]: https://nearley.js.org/
+[nearley]: https://nearley.js.org/
 
 ### Frontend
 
