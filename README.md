@@ -190,8 +190,8 @@ This script will:
 
 [Express 4][express] provides a minimalist web framework to support both template rendering with [PugJS 3][pug] and definition of JSON-based API endpoints. HTML templates are mainly used to render a minimal page for React to bootstrap itself into with initial props injected from the server.
 
-- [express]: https://expressjs.com/en/4x/api.html
-- [pug]: https://pugjs.org/api/getting-started.html
+[express]: https://expressjs.com/en/4x/api.html
+[pug]: https://pugjs.org/api/getting-started.html
 
 #### Cards
 
@@ -220,8 +220,7 @@ Card filters are defined that can be used by the frontend and backend. [Nearley]
 #### Typescript
 
 [TypeScript 5.5][typescript] is gradually being rolled out to replace usage of vanilla JS components with PropTypes.
-
-- [typescript]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html
+[typescript]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html
 
 #### Components and Styling
 
